@@ -1,0 +1,318 @@
+
+:root {
+    --color-dorado: #ffd700;
+    --color-verde-hylia: #90fd47;
+    --fondo-tarjeta: rgba(10, 30, 15, 0.7);
+    --texto-claro: #d1d5db;
+}
+
+#titulo-principal {
+    color: var(--color-dorado);
+    text-align: center;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-shadow: 0px 0px 12px var(--color-dorado);
+
+    /* Nombre idéntico al @keyframes */
+    animation: resplandor-dorado 3s ease-in-out infinite;
+}
+
+.texto-destacado {
+    color: var(--texto-claro);
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.titulo-centrado, .subtitulo-centrado {
+    text-align: center;
+}
+
+h2 {
+    color: var(--color-verde-hylia);
+    font-size: 24px;
+    line-height: 1.6;
+}
+
+body {
+    font-family: "Cinzel", serif;
+    background: linear-gradient(135deg, #071308 0%, #0b1d0c 50%, #153317 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+    padding: 20px 40px;
+}
+
+img { 
+    max-width: 50%;
+    border: 3px solid var(--color-dorado);
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    transition: 0.3s;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--color-dorado);
+    color: #0b1d0c;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+
+    /* EFECTO DE DESTELLO EN EL BOTÓN */
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transition: 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 25px;
+    background: rgba(11, 29, 12, 0.6);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+}
+
+input {
+    padding: 10px;
+    border: 2px solid var(--color-dorado);
+    border-radius: 5px;
+    background-color: #1a331c;
+    color: #ffffff;
+    font-family: "Cinzel", serif;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+a {
+    color: var(--color-dorado);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--color-verde-hylia);
+    text-decoration: underline;
+}
+
+button:hover {
+    background-color: #ffffff;
+    color: #0b1d0c;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 15px rgba(255, 215, 0, 0.6);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-verde-hylia);
+}
+
+img:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 0px 20px var(--color-dorado);
+}
+
+/* --- CSS GRID BASE --- */
+.contenedor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.bloque-portal {
+    text-align: center;
+}
+
+.galeria-inventario {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 20px 0;
+}
+
+/* --- TARJETAS DE INVENTARIO --- */
+.tarjeta-objeto {
+    background: var(--fondo-tarjeta);
+    border: 1px solid var(--color-dorado);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+
+    /* Preparamos la transición suave para múltiples propiedades */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+
+    /* Scroll-driven animation */
+    animation: aparecer-tarjeta linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 40%;
+}
+
+.tarjeta-objeto:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: #ffffff;
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4),
+                0 0 15px rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.tarjeta-objeto h3 {
+    color: var(--color-dorado);
+    margin-top: 0;
+    transition: color 0.3s ease;
+}
+
+.tarjeta-objeto:hover h3 {
+    color: var(--color-verde-hylia);
+}
+
+/* --- DISEÑO ADAPTATIVO (MEDIA QUERIES) --- */
+@media (max-width: 768px) {
+    #titulo-principal {
+        font-size: 26px;
+    }
+
+    .contenedor-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .galeria-inventario {
+        grid-template-columns: 1fr;
+    }
+
+    form {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    input, button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    img {
+        max-width: 90%;
+    }
+}
+
+/* --- ANIMACIONES --- */
+
+/* 1. Resplandor dorado del título */
+@keyframes resplandor-dorado {
+    0% {
+        text-shadow: 0px 0px 8px var(--color-dorado);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0px 0px 25px var(--color-dorado), 0px 0px 35px #ffffff;
+        transform: scale(1.03);
+    }
+    100% {
+        text-shadow: 0px 0px 8px var(--color-dorado);
+        transform: scale(1);
+    }
+}
+
+/* 2. Clase del efecto mecanografía */
+.efecto-mecanografia {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--color-dorado);
+    margin: 0 auto;
+
+    animation:
+        escribir 4s steps(60) 1s forwards,
+        parpadeo-cursor 0.75s step-end infinite;
+}
+
+/* 3. Keyframe para escribir el texto */
+@keyframes escribir {
+    from { max-width: 0; }
+    to { max-width: 100%; }
+}
+
+/* 4. Keyframe para parpadeo del cursor */
+@keyframes parpadeo-cursor {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--color-dorado); }
+}
+
+/* 5. Estilo de la barra fija de scroll en la parte superior */
+.barra-progreso {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: var(--color-dorado);
+    transform-origin: left;
+    z-index: 1000;
+
+    /* Vinculamos la animación al scroll de la página */
+    animation: llenarBarra linear;
+    animation-timeline: scroll(root block);
+}
+
+/* 6. Definición del movimiento de la barra de progreso */
+@keyframes llenarBarra {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); } 
+}
+
+/* 7. Keyframe para aparición de tarjetas con scroll */
+@keyframes aparecer-tarjeta {
+    from { 
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* --- INTEGRANDO ANIMACIONES EN LA WEB (Efecto Scroll General) --- */
+
+/* Clase reutilizable para revelar elementos al hacer scroll */
+.revelar {
+    animation: revelarSeccion linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+}
+
+@keyframes revelarSeccion {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    } 
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
